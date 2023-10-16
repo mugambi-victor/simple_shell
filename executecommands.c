@@ -1,12 +1,20 @@
 #include "shell.h"
 
 /**
- * findCommandPath - Finds the absolute path of a command in the system's PATH.
- * @command: The command to search for.
- * Returns:
- *   - A dynamically allocated string
- * containing the absolute path of the command.
- * Return - NULL if the command is not found in the PATH.
+ * findCommandPath - Find the full path of
+ * a command in the system's PATH directories.
+ * @command: The command to locate.
+ *
+ * This function searches through the directories
+ * specified in the PATH environment variable
+ * to find the full path of the given command. If
+ * the command is found and is executable, the
+ * full path is returned as a newly allocated string.
+ * If the command is not found, or if an error
+ * occurs, NULL is returned.
+ *
+ * Return: A dynamically allocated string containing the full path of the command,
+ *         or NULL if the command is not found or an error occurs.
  */
 char *findCommandPath(const char *command)
 {
@@ -52,9 +60,11 @@ char *findCommandPath(const char *command)
  * executeCommandWithAbsolutePath - Executes a command with an absolute path.
  * @command: The command to execute.
  * @args: An array of command arguments.
- * @interactive: A boolean flag indicating whether the execution is interactive.
+ * @interactive: A boolean flag indicating
+ * whether the execution is interactive.
  *
- * This function forks a child process and executes the specified command.
+ * This function forks a child process and
+ * executes the specified command.
  */
 void executeCommandWithAbsolutePath(char *command, char *args[], bool interactive)
 {
@@ -95,12 +105,14 @@ void executeCommandWithAbsolutePath(char *command, char *args[], bool interactiv
 	}
 }
 /**
- * executeCommandWithNoAbsolutePath - Executes a command without an absolute path.
+ * executeCommandWithNoAbsolutePath - Executes
+ * a command without an absolute path.
  * @programName: The name of the program.
  * @command: The command to execute.
  * @args: An array of command arguments.
  *
- * This function finds the absolute path of the command and then executes it.
+ * This function finds the absolute path
+ * of the command and then executes it.
  */
 void executeCommandWithNoAbsolutePath(char *programName, char *command, char *args[])
 {
@@ -147,13 +159,16 @@ void executeCommandWithNoAbsolutePath(char *programName, char *command, char *ar
 	}
 }
 /**
- * executeCommands - Executes multiple commands sequentially.
+ * executeCommands - Executes
+ * multiple commands sequentially.
  * @programName: The name of the program.
  * @commands: An array of command strings.
  * @numCommands: The number of commands in the array.
- * @interactive: A boolean flag indicating whether the execution is interactive.
+ * @interactive: A boolean flag indicating
+ * whether the execution is interactive.
  *
- * This function iterates through the array of commands, executes each one,
+ * This function iterates through the array of
+ * commands, executes each one,
  * and handles built-in commands separately.
  */
 void executeCommands(char *programName, char *commands[], int numCommands, bool interactive)
