@@ -1,22 +1,44 @@
 #include "shell.h"
 int lastCommandStatus = 0;
-
+/**
+ * setExitStatus - Set the exit status of the last command.
+ * @status: The exit status to be set.
+ *
+ * This function updates the global variable
+ * lastCommandStatus with the provided exit status.
+ * It allows other parts of the program to
+ * access and utilize the exit status of the most recent command.
+ *
+ * Return: void
+ */
 void setExitStatus(int status)
 {
 	lastCommandStatus = status;
 }
-
+/**
+ * main - Entry point of the shell program.
+ * @argc: Number of command-line arguments.
+ * @argv: Array of command-line argument strings.
+ *
+ * This function handles the main flow of the
+ * shell program, processing commands either from
+ * the command line or from a file.
+ * It continuously prompts the user for input in interactive mode.
+ *
+ * Return: The exit status of the last command.
+ */
 int main(int argc, char *argv[])
 {
 	char *line = NULL;
+
 	bool interactive;
 	size_t len = 0;
 
 	if (argc == 2)
 	{
 		/**
-		 * Running in file mode
-		 */
+		* Running in file mode
+		*/
 		executeCommandsFromFile(argv[0], argv[1]);
 		return (lastCommandStatus);
 	}
@@ -33,36 +55,7 @@ int main(int argc, char *argv[])
 		{
 			continue;
 		}
-		if (_strchr(line, ';') != NULL)
-		{
-			executeCommandsSeparatedBySemicolon(argv[0], line, interactive);
-		}
-		else if (_strstr(line, "||") != NULL)
-		{
-			executeCommandsSeparatedByLogicalOr(argv[0], line, interactive);
-		}
-		else if (_strstr(line, "&&") != NULL)
-		{
-			executeCommandsSeparatedByLogicalAnd(argv[0], line, interactive);
-		}
-		else if (strstr(line, "exit"))
-		{
-			char *command;
-			char *args[2];
-			int i;
-
-			splitCommand(line, &command, args);
-			handleExitCommand(argv[0], line, command, args);
-			free(command);
-			for (i = 0; args[i] != NULL; i++)
-			{
-				free(args[i]);
-			}
-		}
-		else
-		{
-			handleNormalCommand(argv[0], line, interactive);
-		}
+		processInput(argv[0], line, interactive);
 		free(line);
 		line = NULL;
 		len = 0;
@@ -70,8 +63,63 @@ int main(int argc, char *argv[])
 	free(line);
 	return (0);
 }
+/**
+ * processInput - Process the user input
+ * and execute the corresponding command.
+ * @programName: The name of the program (argv[0]).
+ * @line: The input line from the user.
+ * @interactive: Flag indicating whether the shell is in interactive mode.
+ *
+ * This function analyzes the user input and
+ * executes the appropriate command or
+ * handles special cases like exit or variable replacement.
+ *
+ * Return: void
+ */
+void processInput(char *programName, char *line, bool interactive)
+{
+	if (_strchr(line, ';') != NULL)
+	{
+		executeCommandsSeparatedBySemicolon(programName, line, interactive);
+	}
+	else if (_strstr(line, "||") != NULL)
+	{
+		executeCommandsSeparatedByLogicalOr(programName, line, interactive);
+	}
+	else if (_strstr(line, "&&") != NULL)
+	{
+		executeCommandsSeparatedByLogicalAnd(programName, line, interactive);
+	}
+	else if (strstr(line, "exit"))
+	{
+		char *command;
+		char *args[2];
+		int i;
 
-
+		splitCommand(line, &command, args);
+		handleExitCommand(programName, line, command, args);
+		free(command);
+		for (i = 0; args[i] != NULL; i++)
+		{
+			free(args[i]);
+		}
+	}
+	else
+	{
+		handleNormalCommand(programName, line, interactive);
+	}
+}
+/**
+ * replaceVariables - Replace special
+ * variables in the command arguments.
+ * @args: Array of command arguments.
+ *
+ * This function replaces special variables
+ * like "$?" and "$$" in the command arguments
+ * with their corresponding values (exit status and process ID).
+ *
+ * Return: void
+ */
 void replaceVariables(char **args)
 {
 	int i;
@@ -96,7 +144,21 @@ void replaceVariables(char **args)
 		}
 	}
 }
-
+/**
+ * handleExitCommand - Handle the exit command
+ * and terminate the shell if necessary.
+ * @programName: The name of the program (argv[0]).
+ * @fullLine: The entire command line.
+ * @command: The command part of the input.
+ * @args: Array of command arguments.
+ *
+ * This function processes the exit command,
+ * setting the exit status or terminating the shell
+ * based on the provided exit code or the
+ * exit status of the last command.
+ *
+ * Return: The exit status or an error code.
+ */
 int handleExitCommand(char *programName, char *fullLine, char *command, char *args[])
 {
 	int i, exitCode;
@@ -148,15 +210,3 @@ int handleExitCommand(char *programName, char *fullLine, char *command, char *ar
 	}
 }
 
-int isNumeric(const char *str)
-{
-	while (*str)
-	{
-		if (!isdigit(*str))
-		{
-			return (0);
-		}
-		str++;
-	}
-	return (1);
-}

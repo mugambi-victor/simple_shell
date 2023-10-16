@@ -34,3 +34,27 @@ void printSpecificAliases(char *names[], int nameCount)
 		}
 	}
 }
+/**
+ * isNumeric - Check if a given string represents a numeric value.
+ * @str: The string to be checked.
+ *
+ * This function iterates through the characters
+ * in the input string and returns
+ * 1 if all characters are numeric digits (0-9),
+ * indicating that the string is numeric.
+ * Otherwise, it returns 0.
+ *
+ * Return: 1 if the string is numeric, 0 otherwise.
+ */
+int isNumeric(const char *str)
+{
+	while (*str)
+	{
+		if (!isdigit(*str))
+		{
+			return (0);
+		}
+		str++;
+	}
+	return (1);
+}
