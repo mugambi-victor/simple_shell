@@ -85,4 +85,6 @@ void displayPrompt(bool interactive) ;
 void processInput(char *programName, char *line, bool interactive);
 void handleExit(char *programName, char *line);
 void cleanupMemory(char *line);
+int wordCounter(char *inputstr, char *delim);
+
 #endif

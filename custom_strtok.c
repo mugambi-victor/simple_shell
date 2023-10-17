@@ -1,17 +1,14 @@
 #include "shell.h"
-/**
- * Function prototypes
-*/
-int word_counter(char *inputstr, char *delim);
+
 
 /**
- * word_counter - Counts the number of words
+ * wordCounter - Counts the number of words
  * in a inputstring using mul_iple delim
  * @inputstr: the input inputstring
  * @delim: a inputstring containing multiple delimiter characters
  * Return: the number of words
  */
-int word_counter(char *inputstr, char *delim)
+int wordCounter(char *inputstr, char *delim)
 {
 	int numwords = 0;
 	bool inWord = false;
@@ -54,7 +51,7 @@ char **_strtok(char *strr, char *delim)
 || delim == NULL || delim[0] == '\0')
 		return (NULL);
 
-	numwords = word_counter(strr, delim);
+	numwords = wordCounter(strr, delim);
 
 	if (numwords == 0)
 		return (NULL);
