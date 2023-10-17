@@ -26,7 +26,7 @@ return;
 
 *command = strdup(token);
 
-while (token != NULL) 
+while (token != NULL)
 {
 args[i] = strdup(token);
 token = strtok(NULL, " ");
@@ -36,7 +36,8 @@ args[i] = NULL;
 
 }
 /**
- * splitCommandsWithSemiColon - Splits the input line into commands using a semicolon as a delimiter.
+ * splitCommandsWithSemiColon - Splits the
+ * input line into commands using a semicolon as a delimiter.
  * @line: The input line to be split.
  * @commands: Pointer to an array to store the split commands.
  * @numCommands: Pointer to store the number of split commands.
@@ -54,7 +55,7 @@ char **tokens;
 *commands = (char **)malloc(sizeof(char *) * 1024);
 
 tokens = _strtok(line, ";");
-i= 0;
+i = 0;
 while (tokens != NULL && tokens[i] != NULL)
 {
 (*commands)[(*numCommands)++] = strdup(tokens[i]);
@@ -69,7 +70,8 @@ free(tokens);
 }
 
 /**
- * splitCommandsWithLogicalOr - Splits the input line into commands using logical OR (||) as a delimiter.
+ * splitCommandsWithLogicalOr - Splits the input
+ * line into commands using logical OR (||) as a delimiter.
  * @line: The input line to be split.
  * @subcommands: Pointer to an array to store the split subcommands.
  * @numSubcommands: Pointer to store the number of split subcommands.
@@ -139,7 +141,7 @@ free(tokens);
  * executeCommandsFromFile - Executes commands from a file.
  * @programName: The name of the program.
  * @filename: The name of the file containing commands.
- * 
+ *
  * This function reads commands from the specified file, one line at a time,
  * and executes them using the executeCommands function.
  */
@@ -151,9 +153,10 @@ size_t len;
 ssize_t read;
 char *commands[1];
 FILE *file = fopen(filename, "r");
-if (file == NULL) {
+if (file == NULL)
+{
 fprintf(stderr, "%s: 0: cannot open %s: No such file\n", programName, filename);
-lastCommandStatus=2;
+lastCommandStatus = 2;
 exit(lastCommandStatus);
 }
 

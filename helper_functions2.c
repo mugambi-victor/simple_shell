@@ -1,10 +1,13 @@
 #include"shell.h"
 /**
- * handleComments - Removes comments from a line by truncating at the '#' character.
+ * handleComments - Removes comments from a line
+ * by truncating at the '#' character.
  * @line: The input line containing a possible comment.
  *
- * This function checks if the input line contains a '#' character, indicating a comment.
- * If a comment is found, it truncates the line at the '#' character, effectively removing
+ * This function checks if the input line
+ * contains a '#' character, indicating a comment.
+ * If a comment is found, it truncates the
+ * line at the '#' character, effectively removing
  * the comment and ensuring only the relevant part of the line is retained.
  */
 void handleComments(char *line)
