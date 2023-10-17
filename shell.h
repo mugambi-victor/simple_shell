@@ -80,4 +80,9 @@ void defineAliases(char *definitions[], int definitionCount);
 void printAliases(void);
 void printSpecificAliases(char *names[], int nameCount);
 
+void executeFileMode(char *programName, char *fileName);
+void displayPrompt(bool interactive) ;
+void processInput(char *programName, char *line, bool interactive);
+void handleExit(char *programName, char *line);
+void cleanupMemory(char *line);
 #endif

@@ -113,6 +113,7 @@ free(tokens);
  */
 
 void splitCommandsWithLogicalAnd(char *line, char ***subcommands, int *numSubcommands)
+{
 char **tokens;
 int j, i;
 *numSubcommands = 0;

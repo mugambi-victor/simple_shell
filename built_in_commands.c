@@ -183,5 +183,6 @@ if (args[1] != NULL && _strcmp(args[1], "-") == 0)
 printf("%s\n", getenv("PWD"));
 }
 
-setExitStatus(0)
+setExitStatus(0);
 return (0);
+}
