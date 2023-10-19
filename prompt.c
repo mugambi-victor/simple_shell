@@ -142,6 +142,21 @@ void replaceVariables(char **args)
 			free(args[i]);
 			args[i] = _strdup(pidStr);
 		}
+		else if (args[i][0] == '$' && args[i][1] != '\0')
+		{
+			char *envVarValue = getenv(args[i] + 1);
+
+			if (envVarValue != NULL)
+			{
+				free(args[i]);
+				args[i] = _strdup(envVarValue);
+			}
+			else
+			{
+				free(args[i]);
+				args[i] = NULL;
+			}
+		}
 	}
 }
 /**
